@@ -1,10 +1,11 @@
 import "./style.css"
 import Home from "./pages/Home";
+import Reagister from "./pages/Reagister";
 
 function App() {
     return (
         <div>
-            <Home/>
+            <Reagister/>
         </div>
     );
 }
