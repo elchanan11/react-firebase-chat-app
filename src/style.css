@@ -1,3 +1,238 @@
 .formContainer{
+    background-color:#a7bcff ;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.formWrapper{
+    background-color: white;
+    padding: 20px 60px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
 
+.logo{
+    color: #5d5b8d;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.title{
+    color: #5d5b8d;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input{
+    padding: 15px;
+    border: none;
+    border-bottom:1px solid #5d5b8d;
+}
+
+button{
+    padding: 5px 0;
+    background-color: #5d5b8d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+p{
+    color: #5d5b8d;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.label{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #5d5b8d;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.home{
+    background-color: #a7bcff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    border: 1px solid white;
+    border-radius: 10px;
+    width: 65%;
+    height: 80%;
+    display: flex;
+    overflow: hidden;
+}
+
+.sideBar {
+    flex: 1;
+    border-right: 1px solid #3e3c61;
+    background-color: #3e3c61;
+}
+
+.navBar {
+    display: flex;
+    align-items: center;
+    background-color: #2f2d52;
+    height: 50px;
+    padding: 10px;
+    justify-content: space-between;
+    color: #ddddf7;
+}
+
+.logoNav{
+    font-weight: bold;
+}
+
+.user {
+    display: flex;
+    gap: 10px;
+}
+
+.imgNav {
+    background-color: #ddddf7;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.buttonNav {
+    background-color: #5d5b8d;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.navName {
+    font-size: 8px;
+}
+
+.chat {
+    flex: 2;
+}
+
+.classInfo {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #5d5b8d;
+    padding: 10px;
+    color: lightgray;
+}
+
+.chatIcons{
+    display: flex;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.navBar{
+
+}
+
+.search {
+    border-bottom: 1px solid gray;
+}
+
+.searchForm{
+    width: 10px;
+    padding: 5px;
+}
+
+.chats :hover{
+    background-color: #2f2d52;
+}
+
+.userChat{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    cursor: pointer;
+
+}
+
+.chatsMessage{
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.userChatName{
+    font-size: 18px;
+    color: lightgray;
+}
+
+.searchInput {
+    background-color: transparent;
+    border: none;
+    color: white;
+    outline: none;
+}
+
+.searchImg{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover ;
+}
+
+.messages{
+    background-color: #ddddf7;
+    padding: 10px;
+    height: calc(100% - 160px);
+}
+
+.chatInput {
+    height: 50px;
+    background-color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.send{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.send :hover{
+    background-color: darkgray;
+}
+
+.sendButton{
+    height: 28px;
+    background-color: lightgray;
+    border: 1px solid darkgray;
+    font-size: 12px;
+    border-radius: 3px;
+    padding: 7px;
+}
+
+.chatImportImage{
+    margin-right: 5px;
+}
+.sendInput{
+    width: 50vh;
 }
