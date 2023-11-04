@@ -5,9 +5,6 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./pages/Login";
 import {useContext} from "react";
 import {AuthContext} from "./context/AuthContext";
-import {
-    Navigate,
-} from 'react-router-dom';
 
 function App() {
     const {currentUser} = useContext(AuthContext)
@@ -18,13 +15,13 @@ function App() {
                 <Routes path={""}>
                     <Route index element={
                         currentUser ? (
-                            <Home />
+                            <Home/>
                         ) : (
-                            <Login />
+                            <Login/>
                         )
                     }/>
-                    <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Reagister />} />
+                    <Route path="login" element={<Login/>}/>
+                    <Route path="register" element={<Reagister/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
