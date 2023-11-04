@@ -4,8 +4,13 @@ import { doc, setDoc } from "firebase/firestore";
 import {auth, storage, db} from "../firebase";
 import {useState} from "react";
 import {CircularProgress} from "@mui/material";
+import {
+    Link,
+    useNavigate,
+} from 'react-router-dom';
 
 function Reagister() {
+    const navigate = useNavigate()
 
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -20,7 +25,6 @@ function Reagister() {
         try {
             setLoading(true)
             const res = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(res);
 
             const storageRef = ref(storage, displayName);
             const uploadTask = uploadBytesResumable(storageRef, file);
@@ -51,6 +55,7 @@ function Reagister() {
                 }
             );
             setLoading(false)
+            navigate("/")
         } catch (err) {
             console.error('Error creating user:', err);
             setLoading(false)
@@ -74,7 +79,7 @@ function Reagister() {
                     <button disabled={loading} className={"registerButton"}>{ !loading ? "Register now" : <CircularProgress fontSize={"small"} />}</button>
                 </form>
                 {error && <span>Something  went wrong...</span>}
-                <p>Have an account? Login</p>
+                <p><Link to={"/login"}>Have an account? Login</Link></p>
             </div>
         </div>
     )

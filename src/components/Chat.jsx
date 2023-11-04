@@ -3,20 +3,23 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Messages from "./Messages";
 import Input from "./Input";
+import {useContext} from "react";
+import {ChatContext} from "../context/ChatContext";
 
 function Chat() {
+    const {data: data} = useContext(ChatContext)
     return (
         <div className={"chat"}>
             <div className={"classInfo"}>
-                <span className={"chatName"}>Elchanan</span>
+                <span className={"chatName"}>{data?.user.name}</span>
                 <div className={"chatIcons"}>
-                    <VideocamIcon />
-                    <PersonAddIcon />
-                    <MoreHorizIcon />
+                    <VideocamIcon/>
+                    <PersonAddIcon/>
+                    <MoreHorizIcon/>
                 </div>
             </div>
-            <Messages />
-            <Input />
+            <Messages/>
+            <Input/>
         </div>
     )
 }
