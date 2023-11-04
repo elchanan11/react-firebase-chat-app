@@ -171,6 +171,13 @@ p{
 
 }
 
+.userChat :hover{
+
+}
+.userChatWrapper :hover{
+    background-color: #2f2d52;
+}
+
 .chatsMessage{
     font-size: 12px;
     font-weight: 500;
@@ -215,6 +222,21 @@ p{
 
 .message.owner .messageContent {
     align-items: flex-end;
+}
+.userChatInfoInput{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.searchName{
+    font-size: 22px;
+}
+
+.searchEmail{
+    font-size: 12px;
+    color: lightgray;
 }
 
 .message.owner p{
