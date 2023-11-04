@@ -3,11 +3,14 @@ import {useState} from "react";
 import {db} from "../firebase";
 import {AuthContext} from "../context/AuthContext";
 import {useContext} from "react";
+import {ChatContext} from "../context/ChatContext";
 
 function Search() {
     const [search, setSearch] = useState("");
     const [user, setUser] = useState(null);
     const [err, setErr] = useState(false);
+
+    const {dispatch} = useContext(ChatContext)
 
     const {currentUser} = useContext(AuthContext)
 
@@ -29,41 +32,46 @@ function Search() {
     };
 
     const handleSelect = async () => {
-        console.log(currentUser)
+        if (user.uid && currentUser.uid) {
+            const combinedId =
+                parseInt(currentUser.uid, 10) >= parseInt(user.id, 10)
+                    ? currentUser.uid + user.uid
+                    : user.uid + currentUser.uid;
+            console.log(combinedId)
 
-        const combinedId =
-            currentUser.uid > user.id
-                ? currentUser.uid + user.uid
-                : user.uid + currentUser.uid;
+            try {
+                const res = await getDoc(doc(db, "chats", combinedId));
+                if (!res.exists()) {
+                    await setDoc(doc(db, "chats", combinedId), { messages: [] }, { merge: true });
+                    const res = await getDoc(doc(db, "chats", combinedId));
+                    console.log(res?.data())
+                    await updateDoc(doc(db, "userChats", currentUser.uid),{
+                        [combinedId+".userInfo"] : {
+                            uid: user.uid,
+                            name: user.name,
+                            photoURL: user.photoURL
+                        },
+                        [combinedId+".date"]: serverTimestamp()
+                    })
 
-        try {
-            const res = await getDoc(doc(db, "chats", combinedId));
-            if (!res.exists()) {
-                await setDoc(doc(db, "chats", combinedId), {messages: []});
-                await updateDoc(doc(db, "userChats", currentUser.uid),{
-                    [combinedId+".userInfo"] : {
-                        user: user.uid,
-                        name: user.name,
-                        photoURL: user.photoURL
-                    },
-                    [combinedId+".date"]: serverTimestamp()
-                })
-
-                await updateDoc(doc(db, "userChats", user.uid),{
-                    [combinedId+".userInfo"] : {
-                        user: currentUser.uid,
-                        name: currentUser.displayName,
-                        photoURL: currentUser.photoURL
-                    },
-                    [combinedId+".date"]: serverTimestamp()
-                })
+                    await updateDoc(doc(db, "userChats", user.uid),{
+                        [combinedId+".userInfo"] : {
+                            user: currentUser.uid,
+                            name: currentUser.displayName,
+                            photoURL: currentUser.photoURL
+                        },
+                        [combinedId+".date"]: serverTimestamp()
+                    })
+                }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
-        }
 
-        setUser(null)
-        setSearch("")
+            setUser(null)
+            setSearch("")
+
+            dispatch({ type: "CHANGE_USER", payload: user });
+        }
     }
 
     return (

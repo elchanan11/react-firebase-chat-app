@@ -1,4 +1,4 @@
-import {doc, getDoc, onSnapshot} from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
 import {useContext, useEffect, useState} from "react";
 import {db} from "../firebase";
 import {AuthContext} from "../context/AuthContext";
@@ -18,6 +18,7 @@ function Chats() {
 
                 if (docSnapshot.exists()) {
                     setChats(docSnapshot.data());
+                    console.log(docSnapshot.data())
                 } else {
                     // Handle the case when the document doesn't exist
                     console.log("Document does not exist");
@@ -33,19 +34,21 @@ function Chats() {
     }, [currentUser.uid]);
 
     const handleSelect = (user) => {
-        // setTimeout(() => {
-            dispatch({ type: "CHANGE_USER", payload: user });
-        // }, 0);
+        console.log(user)
+        dispatch({type: "CHANGE_USER", payload: user});
     };
 
     return (
         <div className={"chats"}>
-            {Object.entries(chats)?.map(chat => (
-                <div className={"userChat"} key={chat[0]} onClick={() => {handleSelect(chat[1]?.userInfo)}}>
-                    <img className={"searchImg"} src={chat[1]?.userInfo.photoUrl ? chat[1]?.userInfo.photoUrl : <Person />} alt={""}/>
+            {Object.entries(chats)?.sort((a, b) => b[1]?.date - a[1]?.date).map(chat => (
+                <div className={"userChat"} key={chat[0]} onClick={() => {
+                    handleSelect(chat[1]?.userInfo)
+                }}>
+                    <img className={"searchImg"}
+                         src={chat[1]?.userInfo.photoURL ? chat[1]?.userInfo.photoURL : <Person/>} alt={""}/>
                     <div className={"userChatInfo"}>
                         <span className={"userChatName"}>{chat[1]?.userInfo.name}</span>
-                        <p className={"chatsMessage"}>HelloQ!</p>
+                        <p className={"chatsMessage"}>{chat[1]?.lastMessage?.text}</p>
                     </div>
                 </div>
             ))}
