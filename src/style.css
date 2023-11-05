@@ -289,6 +289,20 @@ p{
     justify-content: space-between;
 }
 
+.chatInputContent{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sentableImg {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-left: 8px;
+}
+
 .send{
     display: flex;
     align-items: center;
@@ -297,16 +311,21 @@ p{
 }
 
 .send :hover{
-    background-color: darkgray;
+    background-color: gray;
 }
 
 .sendButton{
     height: 28px;
-    background-color: lightgray;
+    background-color: #28809d;
     border: 1px solid darkgray;
     font-size: 12px;
     border-radius: 3px;
     padding: 7px;
+}
+
+
+.sendButton:hover{
+    background-color: blue;
 }
 
 .chatImportImage{

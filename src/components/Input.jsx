@@ -18,48 +18,50 @@ function Input() {
     const {data} = useContext(ChatContext)
 
     const handleSend = async () => {
-        if (!data || !data.chatId) {
-            console.error("Data or data.chatId is falsy");
-            return;
-        }
+        if (text.length > 0 || img) {
+            if (!data || !data.chatId) {
+                console.error("Data or data.chatId is falsy");
+                return;
+            }
 
-        if (img) {
-            const storageRef = ref(storage, uuid());
-            const uploadTask = uploadBytesResumable(storageRef, img);
+            if (img) {
+                const storageRef = ref(storage, uuid());
+                const uploadTask = uploadBytesResumable(storageRef, img);
 
-            uploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    // Handle progress or other snapshot events if needed
-                },
-                (error) => {
-                    console.error('Error uploading file:', error);
-                    // setError(true);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                        await updateDoc(doc(db, "chats", data.chatId), {
-                            messages: arrayUnion({
-                                id: uuid(),
-                                text,
-                                senderId: currentUser.uid,
-                                date: Date.now(),
-                                img: downloadURL
-                            })
+                uploadTask.on(
+                    'state_changed',
+                    (snapshot) => {
+                        // Handle progress or other snapshot events if needed
+                    },
+                    (error) => {
+                        console.error('Error uploading file:', error);
+                        // setError(true);
+                    },
+                    () => {
+                        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+                            await updateDoc(doc(db, "chats", data.chatId), {
+                                messages: arrayUnion({
+                                    id: uuid(),
+                                    text,
+                                    senderId: currentUser.uid,
+                                    date: Date.now(),
+                                    img: downloadURL
+                                })
+                            });
                         });
-                    });
-                }
-            );
+                    }
+                );
 
-        } else {
-            await updateDoc(doc(db, "chats", data.chatId), {
-                messages: arrayUnion({
-                    id: uuid(),
-                    text,
-                    senderId: currentUser.uid,
-                    date: Date.now()
-                })
-            });
+            } else {
+                await updateDoc(doc(db, "chats", data.chatId), {
+                    messages: arrayUnion({
+                        id: uuid(),
+                        text,
+                        senderId: currentUser.uid,
+                        date: Date.now()
+                    })
+                });
+            }
         }
 
         await updateDoc(doc(db, "userChats", currentUser.uid), {
@@ -81,9 +83,28 @@ function Input() {
     };
 
 
+    const handleKeyPress = async (e) => {
+        if (e.key === "Enter" && ! e.shiftKey) {
+            e.preventDefault()
+            await handleSend()
+        }
+    };
+
     return (
         <div className={"chatInput"}>
-            <input value={text}  onChange={e => setText(e.target.value)} className={"sendInput"} type={"text"} placeholder={"Type something"}/>
+            <div className={"chatInputContent"}>
+                <input
+                    value={text}
+                    onKeyDown={handleKeyPress}
+                    onChange={e => setText(e.target.value)}
+                    className={"sendInput"}
+                    type={"text"}
+                    placeholder={"Type something"
+                    }/>
+                <div >
+                    {img && <img src={URL.createObjectURL(img)} alt={""} className={"sentableImg"}/> }
+                </div>
+            </div>
             <div className={"send"}>
                 <AttachFileIcon />
                 <input onChange={e => setImg(e.target.files[0])} type={"file"} style={{display:"none"}} id={"file"}/>

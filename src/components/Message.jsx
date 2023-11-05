@@ -24,7 +24,7 @@ function Message({ message }) {
                 <span className={"messageInfoTime"}>Just Now</span>
             </div>
             <div className={"messageContent"}>
-                <p className={"messageContentText"}>{message?.text}</p>
+                {message?.text && <p className={"messageContentText"}>{message.text}</p>}
                 {message.img && (
                     <img className={"imageMessageContent"} src={message.img} alt={""} />
                 )}
